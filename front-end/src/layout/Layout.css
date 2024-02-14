@@ -1,0 +1,10 @@
+.side-bar {
+  background-color: #393a44;
+  min-width: 200px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
