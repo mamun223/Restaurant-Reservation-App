@@ -3,8 +3,8 @@ const knex = require("../db/connection");
 const tableName = "reservations";
 
 function list () {
-    return knex(tableName)
-    .select(tableName.reservation_date)
+    return knex("reservations as r")
+    .select("r.reservation_date")
 }
 
 function reservationForDate (date) {
