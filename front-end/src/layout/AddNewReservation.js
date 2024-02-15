@@ -17,10 +17,8 @@ function AddNewReservation() {
   });
   const [error, setError] = useState(undefined);
 
-  let date = "";
-
   const handleSubmit = () => {
-    history.push(`/dashboard/${date}`);
+    history.push(`/dashboard/${reservation.reservation_date}`);
     // const abortController = new AbortController();
     // createReservation(reservation, abortController.signal)
     //   .then((reservation) => {
