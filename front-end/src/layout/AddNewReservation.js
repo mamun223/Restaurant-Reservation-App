@@ -10,7 +10,6 @@ function AddNewReservation() {
     first_name: "",
     last_name: "",
     mobile_number: "",
-    description: "",
     reservation_date: "",
     reservation_time: "",
     people: "",
@@ -24,8 +23,6 @@ function AddNewReservation() {
     createReservation(reservation, abortController.signal)
       .then((reservation) => {
         setReservation(reservation);
-        date = reservation.reservation_date;
-        history.push(`/dashboard/${date}`);
       })
       .catch((error) => {
         setError(error);
