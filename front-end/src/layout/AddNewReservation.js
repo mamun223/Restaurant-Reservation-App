@@ -1,5 +1,6 @@
 import ReservationNew from "./ReservationNew";
 import createReservation from "../utils/api";
+import Dashboard from "../dashboard/Dashboard";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -18,20 +19,18 @@ function AddNewReservation() {
   const [error, setError] = useState(undefined);
 
   const handleSubmit = () => {
-    history.push(`/dashboard/${reservation.reservation_date}`);
-    // const abortController = new AbortController();
-    // createReservation(reservation, abortController.signal)
-    //   .then((reservation) => {
-    //     setReservation(reservation);
-    //     console.log("newly created reservation: ", reservation)
-    //     date = reservation.reservation_date;
-    //     history.push(`/dashboard/${date}`);
-    //   })
-    //   .catch((error) => {
-    //     setError(error);
-    //   });
-
-    // return () => abortController.abort();
+    const abortController = new AbortController();
+    createReservation(reservation, abortController.signal)
+      .then((reservation) => {
+        setReservation(reservation);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+    return () => {
+      <Dashboard date={reservation.reservation_date}/>
+      abortController.abort()
+    };
   };
 
   const handleChange = (event) => {
