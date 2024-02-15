@@ -5,17 +5,12 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 async function list(req, res) {
-  // const reservations = req.query.reservation_date
-
-  // if (reservations) {
-  //   res.json({ data: await reservationForDate()})
-  // }
   res.json({ data: await service.list() })
 }
 
-async function reservationForDate(req, res) {
-  res.json({ data: await service.reservationForDate()})
-}
+// async function reservationForDate(req, res) {
+//   res.json({ data: await service.reservationForDate()})
+// }
 
 async function create(req, res, next) {
   const newReservation = ({
@@ -31,6 +26,6 @@ async function create(req, res, next) {
 }
 
 module.exports = {
-  list: [asyncErrorBoundary(list)],
+  list: asyncErrorBoundary(list),
   create: asyncErrorBoundary(create),
 };

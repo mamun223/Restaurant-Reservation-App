@@ -25,6 +25,5 @@ function create(newReservation) {
 
 module.exports = {
     list,
-    reservationForDate,
   create,
 };
