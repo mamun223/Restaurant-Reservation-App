@@ -1,6 +1,7 @@
 import ReservationNew from "./ReservationNew";
 import createReservation from "../utils/api";
-import { useHistory, useState } from "react-router-dom";
+import { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function AddNewReservation() {
   const history = useHistory();
