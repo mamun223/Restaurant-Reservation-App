@@ -23,14 +23,14 @@ function AddNewReservation() {
     createReservation(reservation, abortController.signal)
       .then((reservation) => {
         setReservation(reservation);
+        <Dashboard date={reservation.reservation_date}/>
         history.push(`/dashboard/${reservation.reservation_date}`);
       })
       .catch((error) => {
         setError(error);
       });
 
-    // return () => abortController.abort();
-    return (<Dashboard date={reservation.reservation_date}/>)
+    return () => abortController.abort();
   };
 
   const handleChange = (event) => {
