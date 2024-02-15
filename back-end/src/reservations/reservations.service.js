@@ -4,7 +4,7 @@ const tableName = "reservations";
 
 function list () {
     return knex(tableName)
-    .select("*")
+    .select(tableName.reservation_date)
 }
 
 function reservationForDate (date) {
