@@ -8,9 +8,9 @@ async function list(req, res) {
   res.json({ data: await service.list() })
 }
 
-// async function reservationForDate(req, res) {
-//   res.json({ data: await service.reservationForDate()})
-// }
+async function reservationForDate(req, res) {
+  res.json({ data: await service.reservationForDate()})
+}
 
 async function create(req, res, next) {
   const newReservation = ({

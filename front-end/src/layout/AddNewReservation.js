@@ -20,18 +20,20 @@ function AddNewReservation() {
   let date = "";
 
   const handleSubmit = () => {
-    const abortController = new AbortController();
-    createReservation(reservation, abortController.signal)
-      .then((reservation) => {
-        setReservation(reservation);
-        date = reservation.reservation_date;
-        history.push(`/dashboard/${date}`);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+    history.push(`/dashboard/${date}`);
+    // const abortController = new AbortController();
+    // createReservation(reservation, abortController.signal)
+    //   .then((reservation) => {
+    //     setReservation(reservation);
+    //     console.log("newly created reservation: ", reservation)
+    //     date = reservation.reservation_date;
+    //     history.push(`/dashboard/${date}`);
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //   });
 
-    return () => abortController.abort();
+    // return () => abortController.abort();
   };
 
   const handleChange = (event) => {
