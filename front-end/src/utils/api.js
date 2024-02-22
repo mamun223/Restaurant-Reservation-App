@@ -6,7 +6,7 @@ import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "https://restaurant-reservation-backend-zkhd.onrender.com";
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -69,8 +69,6 @@ export async function listReservations(params, signal) {
 }
 
 async function createReservation(reservation, signal) {
-  // There is a bug in json-server, if you post to /decks/:deckId/cards the associated deckId is a string
-  // and the card is not related to the deck because the data types of the ID's are different.
   const url = `${API_BASE_URL}/reservations`;
   const options = {
     method: "POST",
@@ -80,5 +78,14 @@ async function createReservation(reservation, signal) {
   };
   return await fetchJson(url, options, reservation);
 }
+
+export async function fetchReservations (dateParam, signal) {
+  const url = `${API_BASE_URL}/reservations?reservation_date=${dateParam}`;
+  const response = await fetch(url, { signal });
+  if (!response.ok) {
+    throw new Error("Failed to fetch reservations");
+  }
+  return response.json();
+};
 
 export default createReservation;
