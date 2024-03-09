@@ -4,6 +4,18 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 /**
  * List handler for reservation resources
  */
+
+async function reservationExists (req, res, next) {
+  const reservationId = req.params.reservationId
+  const reservation = await service.read(reservationId)
+  
+  if (reservation) {
+    res.locals.reservationId = reservationId
+    return next()
+  }
+  return next({ status: 404, message: "error: Review cannot be found." })
+}
+
 async function list(req, res) {
   res.json({ data: await service.list() })
 }
@@ -20,19 +32,6 @@ async function reservationForDate(req, res) {
     next(error);
   }
 }
-
-// async function create(req, res, next) {
-//   const newReservation = ({
-//     first_name,
-//     last_name,
-//     mobile_number,
-//     reservation_date,
-//     reservation_time,
-//     people,
-//   } = req.body.data);
-//   const createdReservation = await service.create(newReservation);
-//   res.status(201).json({ data: createdReservation });
-// }
 
 async function create(req, res, next) {
   const newReservation = ({
@@ -51,9 +50,27 @@ async function create(req, res, next) {
   }
 }
 
+async function update (req, res) {
+  const updatedReservation = {
+    ...req.body.data,
+    reservaion_id: res.locals.reservationId,
+  }
+  
+  
+  const data = await service.update(updatedReservation)
+  res.json({ data })
+}
+
+async function destroy (req, res) {
+  await service.destroy(res.locals.reservationId)
+  res.sendStatus(204)
+}
+
 
 module.exports = {
   list: asyncErrorBoundary(list),
   reservationForDate: asyncErrorBoundary(reservationForDate),
   create: asyncErrorBoundary(create),
+  update: asyncErrorBoundary(update),
+  destroy: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
 };

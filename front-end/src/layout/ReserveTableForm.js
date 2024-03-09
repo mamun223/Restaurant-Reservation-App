@@ -1,14 +1,17 @@
-
-
-function ReserveTableForm () {
-    return (
-        <>
+function ReserveTableForm({
+  reservedTable,
+  handleSubmit,
+  handleCancel,
+  handleChange,
+}) {
+  return (
+    <>
       <div className="form-floating mb-3">
         <label htmlFor="floatingInput">Table Name</label>
         <input
           name="table_name"
-        //   value={reservation.first_name}
-        //   onChange={handleChange}
+          value={reservedTable.table_name}
+          onChange={handleChange}
           className="form-control"
           id="floatingInput"
           placeholder="table name"
@@ -18,8 +21,8 @@ function ReserveTableForm () {
         <label htmlFor="floatingInput">Capacity</label>
         <input
           name="capacity"
-        //   value={reservation.last_name}
-        //   onChange={handleChange}
+          value={reservedTable.capacity}
+          onChange={handleChange}
           className="form-control"
           id="floatingInput"
           placeholder="capacity"
@@ -27,22 +30,22 @@ function ReserveTableForm () {
       </div>
       <div className="form-buttons">
         <button
-        //   onClick={handleSubmit}
+          onClick={handleSubmit}
           type="button"
           className="btn btn-primary btn-lg"
         >
           Submit
         </button>
         <button
-        //   onClick={handleCancel}
+          onClick={handleCancel}
           type="button"
           className="btn btn-danger btn-lg"
         >
           Cancel
         </button>
       </div>
-        </>
-    )
+    </>
+  );
 }
 
 export default ReserveTableForm;

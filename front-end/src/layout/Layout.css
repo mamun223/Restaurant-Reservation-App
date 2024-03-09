@@ -8,3 +8,24 @@
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.seat-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.seat-select {
+  margin-top: 20px;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.mt-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); /* Automatically adjust columns to fit the screen */
+  gap: 0px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
