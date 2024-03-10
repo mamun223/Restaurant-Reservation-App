@@ -6,7 +6,8 @@ import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "https://restaurant-reservation-backend-zkhd.onrender.com";
+  process.env.REACT_APP_API_BASE_URL ||
+  "https://restaurant-reservation-backend-zkhd.onrender.com";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -138,7 +139,9 @@ export async function updateReservationStatus(reservationId) {
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({data: { reservation_id: reservationId, status: "booked" } }),
+    body: JSON.stringify({
+      data: { reservation_id: reservationId, status: "booked" },
+    }),
   };
   return await fetchJson(url, options, {});
 }
