@@ -7,7 +7,7 @@ import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL ||
-  "https://restaurant-reservation-backend-zkhd.onrender.com";
+  "postgres://wmafhdvs:lR6ch1B5f_rSYGz2QVUgd9z1jpHSiSZX@lallah.db.elephantsql.com/wmafhdvs";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
