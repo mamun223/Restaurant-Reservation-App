@@ -6,7 +6,7 @@ function SeatButton({ reservation }) {
               onClick={() => {
                 window.location.href = `/reservations/${reservation.reservation_id}/seat`;
               }}
-              className="btn btn-primary"
+              className="btn"
               data-reservation-id-status={reservation.reservation_id}
             >
               Seat

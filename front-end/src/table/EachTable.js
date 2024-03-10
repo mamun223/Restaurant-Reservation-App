@@ -31,15 +31,16 @@ function EachTable({ table, reservation }) {
   return (
     <>
     <ErrorAlert error={error} />
-    <div className="card text-center mb-3 border border-warning" style={{ width: "12rem" }}>
+    <div className="card text-center mb-3 border border-warning " style={{ width: "12rem" }}>
       <div className="card-body">
         <h5 className="card-title">{table.table_name}</h5>
         <p data-table-id-status={table.table_id} className="card-text">
           {table.reservation_id !== null ? "Occupied" : "Free"}
         </p>
-        <button onClick={handleDelete} className="btn btn-primary"  data-table-id-finish={table.table_id}>
-          Finish
-        </button>
+        <button onClick={handleDelete} className="btn" data-table-id-finish={table.table_id}>
+  Finish
+</button>
+
       </div>
     </div>
     </>

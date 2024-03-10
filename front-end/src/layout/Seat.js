@@ -85,7 +85,7 @@ function Seat() {
           <button
             onClick={handleSubmit}
             type="button"
-            className="btn btn-primary btn-lg"
+            className="btn btn-lg"
           >
             Submit
           </button>

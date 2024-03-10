@@ -65,16 +65,22 @@ function Dashboard({ date }) {
         <button
           onClick={handlePreviousClick}
           type="button"
-          class="btn btn-primary btn-lg"
+          class="btn  btn-lg"
         >
-          {<ArrowLeftIcon size={36} />}
+          <div style={{display: "flex"}}>
+          
+          {<ArrowLeftIcon size={30} />}
+          PREV
+          </div>
         </button>
         <button
           onClick={handleNextClick}
           type="button"
-          class="btn btn-primary btn-lg"
-        >
-          {<ArrowRightIcon size={36} />}
+          class="btn  btn-lg"
+        > <div style={{display: "flex"}}>
+          NEXT
+          {<ArrowRightIcon size={30} />}
+          </div>
         </button>
       </div>
       <ListOfTables tables={tables} reservations={reservations} />
