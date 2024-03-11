@@ -49,6 +49,7 @@
   "author": "Thinkful, Inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@primer/octicons-react": "^19.8.0"
+    "@primer/octicons-react": "^19.8.0",
+    "cors": "^2.8.5"
   }
 }
