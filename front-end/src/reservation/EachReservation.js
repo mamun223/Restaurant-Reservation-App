@@ -2,7 +2,6 @@ import React from "react";
 import SeatButton from "../button/SeatButton";
 
 function EachReservation({ reservation, table }) {
-  console.log("@@@@@",table)
   if (!reservation) return null;
   return (
     <div className="card border border-info" style={{ width: "12rem" }}>

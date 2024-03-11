@@ -65,7 +65,7 @@ function Dashboard({ date }) {
         <button
           onClick={handlePreviousClick}
           type="button"
-          class="btn  btn-lg"
+          className="btn  btn-lg"
         >
           <div style={{display: "flex"}}>
           
@@ -76,7 +76,7 @@ function Dashboard({ date }) {
         <button
           onClick={handleNextClick}
           type="button"
-          class="btn  btn-lg"
+          className="btn  btn-lg"
         > <div style={{display: "flex"}}>
           NEXT
           {<ArrowRightIcon size={30} />}

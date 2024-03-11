@@ -1,12 +1,10 @@
 
 import {React, useState} from "react";
 import { freeTable, removeReservation, updateReservationStatus } from "../utils/api";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorAlert from "../layout/ErrorAlert";
 
 function EachTable({ table, reservation }) {
   const [error, setError] = useState(null)
-  const history = useHistory();
 
   if (!table) return null;
   
