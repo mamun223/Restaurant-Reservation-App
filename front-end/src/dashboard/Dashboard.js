@@ -69,7 +69,7 @@ function Dashboard({ date }) {
         >
           <div style={{display: "flex"}}>
           
-          {<ArrowLeftIcon size={30} />}
+          {/* {<ArrowLeftIcon size={30} />} */}
           PREV
           </div>
         </button>
@@ -79,7 +79,7 @@ function Dashboard({ date }) {
           className="btn  btn-lg"
         > <div style={{display: "flex"}}>
           NEXT
-          {<ArrowRightIcon size={30} />}
+          {/* {<ArrowRightIcon size={30} />} */}
           </div>
         </button>
       </div>
