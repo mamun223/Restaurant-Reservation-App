@@ -40,11 +40,8 @@ function Routes() {
       <Route exact={true} path="/reservations/:reservation_id/seat">
         <Seat />
       </Route>
-      <Route path="/tables/:tableId">
+      {/* <Route path="/tables/:tableId">
         <Redirect to={"/reservations/:reservation_id/seat"} />
-      </Route>
-      {/* <Route path="/tables/:tableId/seat">
-        <Redirect to={"/dashboard"} />
       </Route> */}
       <Route>
         <NotFound />
