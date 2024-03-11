@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import { ArrowRightIcon, ArrowLeftIcon } from "@primer/octicons-react";
+// import { ArrowRightIcon, ArrowLeftIcon } from "@primer/octicons-react";
 import { next, previous } from "../utils/date-time";
 import ListOfReservations from "../reservation/ListOfReservations";
 import ListOfTables from "../table/ListOfTables";
