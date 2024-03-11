@@ -90,7 +90,7 @@ function AddNewReservation({ setSelectedDate }) {
         // This is to reload the window when an invalid input is submitted
         // Without this the correctly submitted input will not show in the
         // dashboard immediately. 
-        window.location.reload(true);
+        // window.location.reload(true);
       })
       .catch((error) => {
         setError(error);
