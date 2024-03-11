@@ -86,7 +86,7 @@ function AddNewReservation({ setSelectedDate }) {
     createReservation({ data: reservation }, abortController.signal)
       .then((reservation) => {
         setReservation(reservation);
-        history.push(`/`);
+        history.push("/dashboard");
         // This is to reload the window when an invalid input is submitted
         // Without this the correctly submitted input will not show in the
         // dashboard immediately. 
@@ -108,7 +108,7 @@ function AddNewReservation({ setSelectedDate }) {
   };
 
   const handleCancel = () => {
-    history.push("/");
+    history.push("/dashboard");
   };
 
   return (
