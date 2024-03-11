@@ -5,8 +5,9 @@
  */
 
 const router = require("express").Router();
-const controller = require("./reservations.controller");
 const cors = require("cors");
+const controller = require("./reservations.controller");
+
 
 router.route("/").get(cors(), controller.reservationForDate).post(controller.create);
 router.route("/:reservation_id/status").put(controller.update);
