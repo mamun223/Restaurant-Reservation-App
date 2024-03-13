@@ -7,7 +7,7 @@ import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL ||
-  "https://restaurant-reservation-backend-zkhd.onrender.com";
+  "http://localhost:5001";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -68,6 +68,35 @@ export async function listReservations(params, signal) {
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+export async function searchReservationsByPhoneNumber(mobileNumber) {
+  console.log("mobileNumber: ", mobileNumber)
+  const url = new URL(`${API_BASE_URL}/search?mobile_number=${mobileNumber}`);
+  url.searchParams.append("mobile_number", mobileNumber);
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch reservations.");
+  }
+
+  return await response.json();
+}
+
+// export async function searchReservationsByPhoneNumber(mobileNumber) {
+//   const response = await fetch(`${API_BASE_URL}/search?mobile_number=${mobileNumber}`);
+//   if (!response.ok) {
+//     const errorMessage = await response.text();
+//     throw new Error(errorMessage);
+//   }
+//   return response.json();
+// }
+
 
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`);

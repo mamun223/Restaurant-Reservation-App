@@ -5,6 +5,17 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 
+async function searchByPhoneNumber(req, res, next) {
+  try {
+    const { mobile_number } = req.query;
+    // console.log("mobile: ", mobile_number[0], "query: ",req.query)
+    const reservations = await service.searchByPhoneNumber(mobile_number[0]);
+    res.json({ data: reservations });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function reservationExists (req, res, next) {
   const reservationId = req.params.reservationId
   const reservation = await service.read(reservationId)
@@ -19,6 +30,7 @@ async function reservationExists (req, res, next) {
 async function list(req, res) {
   res.json({ data: await service.list() })
 }
+
 
 async function reservationForDate(req, res) {
   const { date } = req.query;
@@ -73,4 +85,5 @@ module.exports = {
   create: asyncErrorBoundary(create),
   update: asyncErrorBoundary(update),
   destroy: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
+  searchByPhoneNumber: asyncErrorBoundary(searchByPhoneNumber),
 };
