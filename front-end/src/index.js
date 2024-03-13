@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/dashboard">
       <App />
     </Router>
   </React.StrictMode>,
