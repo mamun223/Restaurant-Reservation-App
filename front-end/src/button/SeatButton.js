@@ -4,7 +4,7 @@ function SeatButton({ reservation }) {
       <button
           onClick={() => {
               const encodedReservationId = encodeURIComponent(reservation.reservation_id);
-              window.location.href = `/reservations/${reservation.reservation_id}/seat`;
+              window.location.href = `/reservations/${encodedReservationId}/seat`;
           }}
           className="btn"
           data-reservation-id-status={reservation.reservation_id}
