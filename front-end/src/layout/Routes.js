@@ -23,12 +23,12 @@ function Routes() {
       <Route exact={true} path="/">
         <Redirect to={"/dashboard"} />
       </Route>
-      {/* <Route path="/reservations">
+      <Route path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
       <Route  path="/tables">
         <Redirect to={"/dashboard"} />
-      </Route> */}
+      </Route>
       <Route path="/dashboard">
         <Dashboard date={selectedDate} />
       </Route>
