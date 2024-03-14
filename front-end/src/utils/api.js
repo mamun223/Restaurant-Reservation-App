@@ -88,15 +88,6 @@ export async function searchReservationsByPhoneNumber(mobileNumber) {
   return await response.json();
 }
 
-// export async function searchReservationsByPhoneNumber(mobileNumber) {
-//   const response = await fetch(`${API_BASE_URL}/search?mobile_number=${mobileNumber}`);
-//   if (!response.ok) {
-//     const errorMessage = await response.text();
-//     throw new Error(errorMessage);
-//   }
-//   return response.json();
-// }
-
 
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`);
