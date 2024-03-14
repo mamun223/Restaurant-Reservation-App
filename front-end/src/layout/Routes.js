@@ -26,6 +26,9 @@ function Routes() {
       <Route path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
+      <Route path="/reservations/:reservation_id/seat">
+        <Seat />
+      </Route>
       <Route  path="/tables">
         <Redirect to={"/dashboard"} />
       </Route>
@@ -37,9 +40,6 @@ function Routes() {
       </Route>
       <Route path="/tables/new">
         <AddNewReservedTable />
-      </Route>
-      <Route path="/reservations/:reservation_id/seat">
-        <Seat />
       </Route>
       <Route path="/search">
         <Search />
