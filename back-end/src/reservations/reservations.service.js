@@ -92,6 +92,26 @@ async function update(updatedReservationStatus) {
     .update({ status: reservationStatus }, ["r.reservation_id"]);
 }
 
+async function updateReservationStatusToCancelled(updatedReservationStatus) {
+  const { reservation_id, status } = updatedReservationStatus;
+  console.log(reservation_id, status)
+
+  let reservationStatus;
+  switch (status) {
+    case "booked":
+        reservationStatus = "cancelled";
+      break;
+    case "seated":
+      reservationStatus = "cancelled";
+      break;
+    default:
+      throw new Error("Invalid reservation status.");
+  }
+  return knex("reservations as r")
+    .where({ "r.reservation_id": reservation_id })
+    .update({ status: reservationStatus }, ["r.reservation_id"]);
+}
+
 function destroy(reservationId) {
   return knex("reservations")
   .where({"reservation_id": reservationId})
@@ -109,4 +129,5 @@ module.exports = {
   update,
   destroy,
   searchByPhoneNumber,
+  updateReservationStatusToCancelled,
 };

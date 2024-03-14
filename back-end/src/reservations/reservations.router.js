@@ -10,8 +10,9 @@ const controller = require("./reservations.controller");
 
 
 router.route("/").get(cors(), controller.reservationForDate).post(controller.create)
-router.route("/:reservation_id/status").put(controller.update);
+router.route("/:reservation_id/status").put(controller.update)
 router.route("/:reservationId").delete(controller.destroy);
+router.route("/:reservationId/:reservationStatus").put(controller.updateReservationStatusToCancelled);
 
 
 

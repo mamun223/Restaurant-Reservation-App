@@ -73,6 +73,19 @@ async function update (req, res) {
   res.json({ data })
 }
 
+async function updateReservationStatusToCancelled (req, res) {
+  console.log(req.body)
+  const updatedReservation = {
+    ...req.body.data,
+    reservaion_id: res.locals.reservationId,
+  }
+  console.log("cancel reservation req: ", updatedReservation)
+  
+  
+  const data = await service.updateReservationStatusToCancelled(updatedReservation)
+  res.json({ data })
+}
+
 async function destroy (req, res) {
   await service.destroy(res.locals.reservationId)
   res.sendStatus(204)
@@ -86,4 +99,5 @@ module.exports = {
   update: asyncErrorBoundary(update),
   destroy: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
   searchByPhoneNumber: asyncErrorBoundary(searchByPhoneNumber),
+  updateReservationStatusToCancelled: asyncErrorBoundary(updateReservationStatusToCancelled),
 };

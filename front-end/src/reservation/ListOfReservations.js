@@ -4,7 +4,6 @@ import EachReservation from "./EachReservation";
 function ListOfReservations({ tables, reservations, mobileNumber }) {
   
   if (reservations.length && tables.length) {
-    console.log("@@@@@@@@@@@@@mobileNumber: ", mobileNumber)
     const list = reservations.map((reservation) => {
       const tableForReservation = tables.find((table) => 
         table.reservation_id && table.reservation_id === reservation.reservation_id)

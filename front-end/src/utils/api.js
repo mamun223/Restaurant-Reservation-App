@@ -157,6 +157,7 @@ export async function updateTableReservationId(table) {
 }
 
 export async function updateReservationStatus(reservationId) {
+
   const url = `${API_BASE_URL}/reservations/${reservationId}/status`;
   const options = {
     method: "PUT",
@@ -167,5 +168,20 @@ export async function updateReservationStatus(reservationId) {
   };
   return await fetchJson(url, options, {});
 }
+
+export async function updateReservationStatusToCancelled(reservationId, status) {
+  console.log("status: ", status, "reservationsId: ", reservationId)
+  const url = `${API_BASE_URL}/reservations/${reservationId}/${status}`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({
+      data: { reservation_id: reservationId, status: status },
+    }),
+  };
+  return await fetchJson(url, options, {});
+}
+
+
 
 export default createReservation;

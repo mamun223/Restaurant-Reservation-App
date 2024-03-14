@@ -24,8 +24,10 @@
 }
 
 .btn {
-  background-color: rgb(53, 102, 66);
+  background-color: rgb(83, 135, 97);
   color: white;
+  border-radius: 13px;
+  padding: 3px 13px; 
 }
 
 .mt-4 {
