@@ -58,8 +58,8 @@ function EditReservation () {
     } else{
       return (
         <>
-        <h3>ONLY BOOKED RESERVATION CAN BE EDITED</h3>
         <ErrorAlert error={error} />
+        <h3>ONLY BOOKED RESERVATION CAN BE EDITED</h3>
         </>
       )
     }
