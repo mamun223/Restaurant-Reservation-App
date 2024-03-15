@@ -112,7 +112,7 @@ async function updateReservationStatusToCancelled(updatedReservationStatus) {
 }
 
 async function updateReservation(reservation) {
-  console.log("reservation in service: ",reservation)
+
   const {
     reservation_id,
     first_name,
@@ -122,6 +122,10 @@ async function updateReservation(reservation) {
     reservation_time,
     people,
   } = reservation;
+
+  if (!isValidReservationDate(reservation_date, reservation_time)) {
+    return;
+  }
 
   const updateFields = {
     first_name: reservation.first_name,

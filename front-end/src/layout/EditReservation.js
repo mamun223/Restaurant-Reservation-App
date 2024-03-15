@@ -20,7 +20,7 @@ function EditReservation () {
       })
     }, [reservation_id])
 
-    if (reservation){
+    if (reservation && reservation.status === "booked"){
     console.log("reservation in edit: ",reservation)
         const handleSubmit = () => {
           const abortController = new AbortController();
@@ -58,7 +58,10 @@ function EditReservation () {
     }
 
     return (
+      <>
+      <h3>ONLY BOOKED RESERVATION CAN BE EDITED</h3>
       <ErrorAlert error={error} />
+      </>
     )
 }
 
