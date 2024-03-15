@@ -78,7 +78,7 @@ function AddNewReservation({ setSelectedDate }) {
   });
 
   const [error, setError] = useState(null);
-  const [key, setKey] = useState(1); // Initialize key state
+  // const [key, setKey] = useState(1); // Initialize key state
 
   const handleSubmit = () => {
     const abortController = new AbortController();
@@ -87,10 +87,6 @@ function AddNewReservation({ setSelectedDate }) {
       .then((reservation) => {
         setReservation(reservation);
         history.push("/dashboard");
-        // This is to reload the window when an invalid input is submitted
-        // Without this the correctly submitted input will not show in the
-        // dashboard immediately. 
-        // window.location.reload(true);
       })
       .catch((error) => {
         setError(error);

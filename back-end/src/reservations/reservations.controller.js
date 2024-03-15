@@ -5,6 +5,18 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 
+async function read(req, res) {
+  const reservationId = req.params.reservationId
+  console.log("reservationId in controller: ",reservationId)
+  const reservation = await service.read(reservationId)
+  
+  if (reservation) {
+    res.locals.reservationId = reservationId
+    res.json({ data: reservation })
+  }
+  return next({ status: 404, message: "error: Review cannot be found." })
+}
+
 async function searchByPhoneNumber(req, res, next) {
   try {
     const { mobile_number } = req.query;
@@ -68,8 +80,17 @@ async function update (req, res) {
     reservaion_id: res.locals.reservationId,
   }
   
-  
   const data = await service.update(updatedReservation)
+  res.json({ data })
+}
+
+async function updateReservation (req, res) {
+  const updatedReservation = {
+    ...req.body.data,
+    reservaion_id: res.locals.reservationId,
+  }
+  
+  const data = await service.updateReservation(updatedReservation)
   res.json({ data })
 }
 
@@ -100,4 +121,6 @@ module.exports = {
   destroy: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
   searchByPhoneNumber: asyncErrorBoundary(searchByPhoneNumber),
   updateReservationStatusToCancelled: asyncErrorBoundary(updateReservationStatusToCancelled),
+  read: asyncErrorBoundary(read),
+  updateReservation: asyncErrorBoundary(updateReservation),
 };

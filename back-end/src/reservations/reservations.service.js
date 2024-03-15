@@ -1,6 +1,5 @@
 const knex = require("../db/connection");
 
-
 function list() {
   return knex("reservations").select("*");
 }
@@ -12,7 +11,7 @@ function reservationForDate(date) {
 }
 
 function searchByPhoneNumber(mobile_number) {
-  console.log("mobile_number: ",mobile_number)
+  console.log("mobile_number: ", mobile_number);
   return knex("reservations")
     .whereRaw(
       "translate(mobile_number, '() -', '') like ?",
@@ -44,7 +43,8 @@ function isValidReservationDate(date, time) {
     throw new Error("Reservations on Tuesdays are not allowed.");
   }
 
-  const reservationTime = reservationDate.getHours() * 100 + reservationDate.getMinutes();
+  const reservationTime =
+    reservationDate.getHours() * 100 + reservationDate.getMinutes();
   const minTime = 1030;
   const maxTime = 2130;
   if (reservationTime < minTime || reservationTime > maxTime) {
@@ -63,12 +63,12 @@ function isValidReservationDate(date, time) {
 }
 
 function read(reservationId) {
+  console.log("reservationId: ", reservationId);
   return knex("reservations as r")
-  .select("r.reservation_id")
-  .where({ "r.reservation_id": reservationId })
-  .first()
+    .select("r.*")
+    .where({ "r.reservation_id": reservationId })
+    .first();
 }
-
 
 async function update(updatedReservationStatus) {
   const { reservation_id, status } = updatedReservationStatus;
@@ -76,7 +76,7 @@ async function update(updatedReservationStatus) {
   let reservationStatus;
   switch (status) {
     case "booked":
-        reservationStatus = "seated";
+      reservationStatus = "seated";
       break;
     case "seated":
       reservationStatus = "finished";
@@ -94,12 +94,11 @@ async function update(updatedReservationStatus) {
 
 async function updateReservationStatusToCancelled(updatedReservationStatus) {
   const { reservation_id, status } = updatedReservationStatus;
-  console.log(reservation_id, status)
 
   let reservationStatus;
   switch (status) {
     case "booked":
-        reservationStatus = "cancelled";
+      reservationStatus = "cancelled";
       break;
     case "seated":
       reservationStatus = "cancelled";
@@ -112,13 +111,36 @@ async function updateReservationStatusToCancelled(updatedReservationStatus) {
     .update({ status: reservationStatus }, ["r.reservation_id"]);
 }
 
-function destroy(reservationId) {
-  return knex("reservations")
-  .where({"reservation_id": reservationId})
-  .del()
+async function updateReservation(reservation) {
+  console.log("reservation in service: ",reservation)
+  const {
+    reservation_id,
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  } = reservation;
+
+  const updateFields = {
+    first_name: reservation.first_name,
+    last_name: reservation.last_name,
+    mobile_number: reservation.mobile_number,
+    reservation_date: reservation.reservation_date,
+    reservation_time: reservation.reservation_time,
+    people: reservation.people,
+  };
+
+  return knex("reservations as r")
+    .where({ "r.reservation_id": reservation_id })
+    .update(updateFields)
+    .returning("*"); // Return the updated reservation
 }
 
-
+function destroy(reservationId) {
+  return knex("reservations").where({ reservation_id: reservationId }).del();
+}
 
 module.exports = {
   list,
@@ -130,4 +152,5 @@ module.exports = {
   destroy,
   searchByPhoneNumber,
   updateReservationStatusToCancelled,
+  updateReservation,
 };
