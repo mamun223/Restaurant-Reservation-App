@@ -55,14 +55,16 @@ function EditReservation () {
           handleChange={handleChange}
         />
         )
+    } else{
+      return (
+        <>
+        <h3>ONLY BOOKED RESERVATION CAN BE EDITED</h3>
+        <ErrorAlert error={error} />
+        </>
+      )
     }
 
-    return (
-      <>
-      <h3>ONLY BOOKED RESERVATION CAN BE EDITED</h3>
-      <ErrorAlert error={error} />
-      </>
-    )
+    
 }
 
 export default EditReservation;
