@@ -25,12 +25,14 @@ function createReservedTable(newTable) {
   return knex("reservedTable").insert(newTable, "*");
 }
 
-function create(newReservation) {
+async function create(newReservation) {
   const { reservation_date, reservation_time } = newReservation;
   if (!isValidReservationDate(reservation_date, reservation_time)) {
     return;
   }
-  return knex("reservations").insert(newReservation, "*");
+  // return knex("reservations").insert(newReservation, "*");
+  const [insertedReservation] = await knex("reservations").insert(newReservation, "*");
+  return insertedReservation;
 }
 
 function isValidReservationDate(date, time) {
@@ -41,7 +43,7 @@ function isValidReservationDate(date, time) {
   reservationDate.setHours(reservationDate.getHours());
 
   if (reservationDate.getDay() === 2) {
-    throw new Error("Reservations on Tuesdays are not allowed.");
+    throw new Error("closed");
   }
 
   const reservationTime =
@@ -57,7 +59,7 @@ function isValidReservationDate(date, time) {
     hour12: false,
   });
   if (reservationDate < new Date(today)) {
-    throw new Error("Reservations cannot be made in the past.");
+    throw new Error("future");
   }
 
   return true;
@@ -147,6 +149,11 @@ function destroy(reservationId) {
   return knex("reservations").where({ reservation_id: reservationId }).del();
 }
 
+function isValidTime(time) {
+  const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  return timeRegex.test(time);
+}
+
 module.exports = {
   list,
   create,
@@ -158,4 +165,5 @@ module.exports = {
   searchByPhoneNumber,
   updateReservationStatusToCancelled,
   updateReservation,
+  isValidTime,
 };

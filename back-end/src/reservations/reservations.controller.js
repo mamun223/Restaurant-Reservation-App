@@ -5,7 +5,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
  * List handler for reservation resources
  */
 
-async function read(req, res) {
+async function read(req, res, next) {
   const reservationId = req.params.reservationId
   console.log("reservationId in controller: ",reservationId)
   const reservation = await service.read(reservationId)
@@ -14,7 +14,7 @@ async function read(req, res) {
     res.locals.reservationId = reservationId
     res.json({ data: reservation })
   }
-  return next({ status: 404, message: "error: Review cannot be found." })
+  return next({ status: 404, message: "99" })
 }
 
 async function searchByPhoneNumber(req, res, next) {
@@ -76,15 +76,16 @@ async function create(req, res, next) {
   if (!mobile_number) {
     return res.status(400).json({ error: "mobile_number is required" });
   }
-  if (!reservation_date) {
-    return res.status(400).json({ error: "reservation_date is required" });
+  if (!reservation_date || isNaN(Date.parse(reservation_date))) {
+    return res.status(400).json({ error: "reservation_date must be a valid date" });
   }
-  if (!reservation_time) {
-    return res.status(400).json({ error: "reservation_time is required" });
+  if (!reservation_time || !service.isValidTime(reservation_time)) {
+    return res.status(400).json({ error: "reservation_time must be a valid time" });
   }
-  if (!people || isNaN(parseInt(people))) {
+  if (!people || typeof parseInt(people) != "number") {
     return res.status(400).json({ error: "people must be a valid number" });
   }
+  
 
   
   try {

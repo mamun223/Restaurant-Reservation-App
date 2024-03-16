@@ -4,8 +4,10 @@ function list() {
   return knex("tables as t").select("t.*").orderBy("t.table_name");
 }
 
-function createTable(newTable) {
-  return knex("tables").insert(newTable, "*");
+async function createTable(newTable) {
+  // return knex("tables").insert(newTable, "*");
+  const [insertedTable] = await knex("tables").insert(newTable, "*");
+  return insertedTable;
 }
 
 async function insertReservationId(table) {
