@@ -82,7 +82,7 @@ async function create(req, res, next) {
   if (!reservation_time) {
     return res.status(400).json({ error: "reservation_time is required" });
   }
-  if (!people || typeof people !== Number) {
+  if (!people || typeof people !== "number") {
     return res.status(400).json({ error: "people is required" });
   }
 
