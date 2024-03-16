@@ -83,7 +83,7 @@ async function create(req, res, next) {
     return res.status(400).json({ error: "reservation_time is required" });
   }
   if (!people || isNaN(parseInt(people))) {
-    return res.status(400).json({ error: "people is required" });
+    return res.status(400).json({ error: "people must be a valid number" });
   }
 
   
