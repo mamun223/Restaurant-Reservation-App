@@ -21,7 +21,7 @@ async function createTable(req, res, next) {
       .status(400)
       .json({ error: "table_name" });
   }
-  if (typeof capacity !== "number" || isNaN(capacity) || capacity === 0) {
+  if (typeof capacity !== "number" || capacity === 0) {
     return res
       .status(400)
       .json({ error: "capacity" });
