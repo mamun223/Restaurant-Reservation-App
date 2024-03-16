@@ -44,7 +44,7 @@ async function list(req, res) {
 }
 
 
-async function reservationForDate(req, res) {
+async function reservationForDate(req, res, next) {
   const { date } = req.query;
   if (!date) {
     return res.status(400).json({ error: "Date parameter is required" });
@@ -66,6 +66,27 @@ async function create(req, res, next) {
       reservation_time,
       people,
   } = req.body.data);
+
+  if (!first_name) {
+    return res.status(400).json({ error: "first_name is required" });
+  }
+  if (!last_name) {
+    return res.status(400).json({ error: "last_name is required" });
+  }
+  if (!mobile_number) {
+    return res.status(400).json({ error: "mobile_number is required" });
+  }
+  if (!reservation_date) {
+    return res.status(400).json({ error: "reservation_date is required" });
+  }
+  if (!reservation_time) {
+    return res.status(400).json({ error: "reservation_time is required" });
+  }
+  if (!people || typeof people !== Number) {
+    return res.status(400).json({ error: "people is required" });
+  }
+
+  
   try {
       const createdReservation = await service.create(newReservation);
       res.status(201).json({ data: createdReservation });

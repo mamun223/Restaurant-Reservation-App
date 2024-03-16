@@ -6,8 +6,7 @@ import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
-  "https://restaurant-reservation-backend-zkhd.onrender.com";
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -70,7 +69,7 @@ export async function listReservations(params, signal) {
 }
 
 export async function searchReservationsByPhoneNumber(mobileNumber) {
-  console.log("mobileNumber: ", mobileNumber)
+  console.log("mobileNumber: ", mobileNumber);
   const url = new URL(`${API_BASE_URL}/search?mobile_number=${mobileNumber}`);
   url.searchParams.append("mobile_number", mobileNumber);
 
@@ -87,9 +86,6 @@ export async function searchReservationsByPhoneNumber(mobileNumber) {
 
   return await response.json();
 }
-
-
-
 
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`);
@@ -157,7 +153,6 @@ export async function updateTableReservationId(table) {
 }
 
 export async function updateReservationStatus(reservationId) {
-
   const url = `${API_BASE_URL}/reservations/${reservationId}/status`;
   const options = {
     method: "PUT",
@@ -170,13 +165,13 @@ export async function updateReservationStatus(reservationId) {
 }
 
 export async function getReservation(reservationId) {
-  console.log("reservationId in getReservation api: ", reservationId)
+  console.log("reservationId in getReservation api: ", reservationId);
   const url = `${API_BASE_URL}/reservations/${reservationId}`;
   return await fetchJson(url, {});
 }
 
 export async function updateReservation(reservation) {
-  console.log(reservation.reservation_id)
+  console.log(reservation.reservation_id);
   const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
   const options = {
     method: "PUT",
@@ -189,14 +184,18 @@ export async function updateReservation(reservation) {
         mobile_number: reservation.mobile_number,
         reservation_date: reservation.reservation_date,
         reservation_time: reservation.reservation_time,
-        people: reservation.people, },
+        people: reservation.people,
+      },
     }),
   };
   return await fetchJson(url, options, {});
 }
 
-export async function updateReservationStatusToCancelled(reservationId, status) {
-  console.log("status: ", status, "reservationsId: ", reservationId)
+export async function updateReservationStatusToCancelled(
+  reservationId,
+  status
+) {
+  console.log("status: ", status, "reservationsId: ", reservationId);
   const url = `${API_BASE_URL}/reservations/${reservationId}/${status}`;
   const options = {
     method: "PUT",
@@ -207,7 +206,5 @@ export async function updateReservationStatusToCancelled(reservationId, status) 
   };
   return await fetchJson(url, options, {});
 }
-
-
 
 export default createReservation;

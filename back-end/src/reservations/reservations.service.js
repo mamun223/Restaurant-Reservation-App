@@ -7,7 +7,8 @@ function list() {
 function reservationForDate(date) {
   return knex("reservations as r")
     .select("r.*", "r.reservation_date as date")
-    .where({ "r.reservation_date": date });
+    .where({ "r.reservation_date": date })
+    .orderBy("r.reservation_time");
 }
 
 function searchByPhoneNumber(mobile_number) {
