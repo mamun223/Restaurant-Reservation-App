@@ -21,7 +21,7 @@ async function createTable(req, res, next) {
       .status(400)
       .json({ error: "table_name" });
   }
-  if (capacity === 0) {
+  if (parseInt(capacity) === 0) {
     return res
       .status(400)
       .json({ error: "capacity" });
