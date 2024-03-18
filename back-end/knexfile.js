@@ -8,10 +8,10 @@ require('dotenv').config();
 const path = require("path");
 
 const {
-  DATABASE_URL = "postgres://wmafhdvs:lR6ch1B5f_rSYGz2QVUgd9z1jpHSiSZX@lallah.db.elephantsql.com/wmafhdvs",
-  DATABASE_URL_DEVELOPMENT = "postgres://wmafhdvs:lR6ch1B5f_rSYGz2QVUgd9z1jpHSiSZX@lallah.db.elephantsql.com/wmafhdvs",
-  DATABASE_URL_TEST = "postgres://wmafhdvs:lR6ch1B5f_rSYGz2QVUgd9z1jpHSiSZX@lallah.db.elephantsql.com/wmafhdvs",
-  DATABASE_URL_PREVIEW = "postgres://wmafhdvs:lR6ch1B5f_rSYGz2QVUgd9z1jpHSiSZX@lallah.db.elephantsql.com/wmafhdvs",
+  DATABASE_URL="postgres://navsrnys:pkFMzbe2SUOzvV9dE-2V1T5OWt_s5ous@drona.db.elephantsql.com/navsrnys",
+DATABASE_URL_DEVELOPMENT="postgres://lwuzpejc:DCwet7vLbbJUv9CJTnw2q2vwf-agYbdT@drona.db.elephantsql.com/lwuzpejc",
+DATABASE_URL_TEST="postgres://jhergnpg:O1VbriZ_COKjtsO4PnK75i6Q8S4kJg8I@drona.db.elephantsql.com/jhergnpg",
+DATABASE_URL_PREVIEW="postgres://rdhjctix:CV5Eo_H0O_UETanVPiSMmVhMl57jFnnU@drona.db.elephantsql.com/rdhjctix",
   DEBUG,
 } = process.env;
 
