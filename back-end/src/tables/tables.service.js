@@ -4,8 +4,15 @@ function list() {
   return knex("tables as t").select("t.*").orderBy("t.table_name");
 }
 
-function createTable(newTable) {
-  return knex("tables").insert(newTable, "*");
+async function createTable(newTable) {
+  try {
+    const [table] = await knex("tables")
+      .insert(newTable)
+      .returning(["table_name", "capacity"]);
+    return table;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function insertReservationId(table) {
@@ -31,8 +38,10 @@ async function insertReservationId(table) {
     .first();
 
   if (reservationPeopleCount.people > tableCapacity.capacity) {
-    throw new Error("The number of people in the reservation must be less than or equal to the table capacity.");
-  } 
+    throw new Error(
+      "The number of people in the reservation must be less than or equal to the table capacity."
+    );
+  }
 
   return knex("tables")
     .where("table_id", tableId)
@@ -42,9 +51,9 @@ async function insertReservationId(table) {
 
 function read(tableId) {
   return knex("tables as t")
-  .select("t.table_id")
-  .where({ "t.table_id": tableId })
-  .first()
+    .select("t.table_id")
+    .where({ "t.table_id": tableId })
+    .first();
 }
 
 async function destroy(tableId) {
@@ -61,9 +70,6 @@ async function destroy(tableId) {
     .where({ table_id: tableId })
     .update({ reservation_id: null });
 }
-
-
-
 
 module.exports = {
   list,

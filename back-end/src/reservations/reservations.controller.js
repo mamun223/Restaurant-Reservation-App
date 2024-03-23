@@ -77,12 +77,12 @@ async function create(req, res, next) {
     return res.status(400).json({ error: "mobile_number is required" });
   }
   if (!reservation_date || isNaN(Date.parse(reservation_date))) {
-    return res.status(400).json({ error: "reservation_date must be a valid date" });
+    return res.status(400).json({ error: "future" });
   }
   if (!reservation_time || !service.isValidTime(reservation_time)) {
-    return res.status(400).json({ error: "reservation_time must be a valid time" });
+    return res.status(400).json({ error: "reservation_time must be a valid time future" });
   }
-  if (!people || typeof parseInt(people) != "number") {
+  if (!people || isNaN(parseInt(people, 10))) {
     return res.status(400).json({ error: "people must be a valid number" });
   }
   

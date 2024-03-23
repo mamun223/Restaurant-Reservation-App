@@ -15,6 +15,13 @@ async function createTable(req, res, next) {
         table_name,
         capacity,
     } = req.body.data);
+
+    if (!table_name || table_name.length < 2) {
+      return res.status(400).json({ error: "table_name is required" });
+    }
+    if (capacity === 0 || isNaN(parseInt(capacity))) {
+      return res.status(400).json({ error: "capacity" });
+    }
     try {
         const createdReservedTable = await service.createTable(newReservedTable);
         res.status(201).json({ data: createdReservedTable });
@@ -27,6 +34,8 @@ async function insertReservationId(req, res, next) {
   try {
     const { tableId } = req.params;
     const { reservation_id } = req.body.data;
+
+    if (!reservation_id || !tableId) return res.status(400).json({ error: "missing reservation id" });
 
     const updatedReservationId = await service.insertReservationId({
       tableId,

@@ -26,16 +26,20 @@ function createReservedTable(newTable) {
 }
 
 async function create(newReservation) {
-  const { reservation_date, reservation_time } = newReservation;
-  if (!isValidReservationDate(reservation_date, reservation_time)) {
+  const { reservation_date, reservation_time, people } = newReservation;
+  if (!isValidReservationDate(reservation_date, reservation_time, people)) {
     return;
   }
   // return knex("reservations").insert(newReservation, "*");
-  const [insertedReservation] = await knex("reservations").insert(newReservation, "*");
+  const [insertedReservation] = await knex("reservations").insert(
+    newReservation,
+    "*"
+  );
   return insertedReservation;
 }
 
-function isValidReservationDate(date, time) {
+function isValidReservationDate(date, time, people) {
+
   const [year, month, day] = date.split("-").map(Number);
   const [hour, minute] = time.split(":").map(Number);
 
@@ -115,7 +119,6 @@ async function updateReservationStatusToCancelled(updatedReservationStatus) {
 }
 
 async function updateReservation(reservation) {
-
   const {
     reservation_id,
     first_name,
