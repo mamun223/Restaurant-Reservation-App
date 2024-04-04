@@ -19,9 +19,13 @@ async function createTable(req, res, next) {
     if (!table_name || table_name.length < 2) {
       return res.status(400).json({ error: "table_name is required" });
     }
-    if (capacity === 0 || isNaN(parseInt(capacity))) {
+    if (capacity === 0 || isNaN(capacity)) {
       return res.status(400).json({ error: "capacity" });
     }
+
+    // if (capacity === 0 || isNaN(parseInt(capacity))) {
+    //   return res.status(400).json({ error: "capacity" });
+    // }
     try {
         const createdReservedTable = await service.createTable(newReservedTable);
         res.status(201).json({ data: createdReservedTable });
@@ -34,14 +38,17 @@ async function insertReservationId(req, res, next) {
   try {
     const { tableId } = req.params;
     const { reservation_id } = req.body.data;
-
-    if (!reservation_id || !tableId) return res.status(400).json({ error: "missing reservation id" });
-
+    
+    if (!reservation_id || !tableId) return res.status(400).json({ error: "reservation_id" });
+    // const reservationExists = await service.checkIfReservationExists(reservation_id);
+    // if (!reservationExists) {
+    //   return res.status(404).json({ error: "Reservation ID not found" });
+    // }
     const updatedReservationId = await service.insertReservationId({
       tableId,
       reservation_id,
     });
-    res.status(201).json({ data: updatedReservationId });
+    res.status(200).json({ data: updatedReservationId });
   } catch (error) {
     next(error);
   }
@@ -55,7 +62,7 @@ async function tableExists (req, res, next) {
     res.locals.tableId = tableId
     return next()
   }
-  return next({ status: 404, message: "error: Table cannot be found." })
+  return next({ status: 404, message: `${tableId}` }) // made a change here!!!!
 }
 
 // async function destroy (req, res) {
@@ -67,6 +74,7 @@ async function destroy(req, res) {
   try {
     await service.destroy(res.locals.tableId);
     res.sendStatus(204);
+    // res.sendStatus(200); //This is a big issue!!!! made a change here!!!!!
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -76,7 +84,7 @@ async function read(req, res) {
   const table = await service.read(Number(res.locals.movieId));
 
   if (!table) {
-    res.status(404).json({ error: 'table not found.' });
+    res.status(404).json({ error: `${table.table_id}` });
   } 
   res.json({ data: table });
 }

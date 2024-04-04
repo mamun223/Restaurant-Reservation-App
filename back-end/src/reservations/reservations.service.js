@@ -12,7 +12,6 @@ function reservationForDate(date) {
 }
 
 function searchByPhoneNumber(mobile_number) {
-  console.log("mobile_number: ", mobile_number);
   return knex("reservations")
     .whereRaw(
       "translate(mobile_number, '() -', '') like ?",
@@ -70,7 +69,6 @@ function isValidReservationDate(date, time, people) {
 }
 
 function read(reservationId) {
-  console.log("reservationId: ", reservationId);
   return knex("reservations as r")
     .select("r.*")
     .where({ "r.reservation_id": reservationId })
@@ -94,6 +92,7 @@ async function update(updatedReservationStatus) {
     default:
       throw new Error("Invalid reservation status.");
   }
+  console.log("reservation_id in update function of service: ", reservation_id)
   return knex("reservations as r")
     .where({ "r.reservation_id": reservation_id })
     .update({ status: reservationStatus }, ["r.reservation_id"]);

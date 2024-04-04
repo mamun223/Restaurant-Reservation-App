@@ -56,6 +56,13 @@ function read(tableId) {
     .first();
 }
 
+async function checkIfReservationExists(reservationId) {
+  return knex("reservation as r")
+    .select("*")
+    .where("r.reservation_id", reservationId)
+    .first();
+}
+
 async function destroy(tableId) {
   const table = await knex("tables")
     .select("reservation_id")
@@ -63,7 +70,7 @@ async function destroy(tableId) {
     .first();
 
   if (table.reservation_id === null) {
-    throw new Error("Table is already free.");
+    throw new Error("not occupied");
   }
 
   return knex("tables")
@@ -77,4 +84,5 @@ module.exports = {
   insertReservationId,
   destroy,
   read,
+  checkIfReservationExists,
 };

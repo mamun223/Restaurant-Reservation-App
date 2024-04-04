@@ -5,12 +5,6 @@ exports.seed = function (knex) {
     .then(function () {
       return knex("tables").insert([
         {
-          table_name: "Rick",
-          capacity: 4,
-          created_at: "2020-12-10T08:30:32.326Z",
-          updated_at: "2020-12-10T08:30:32.326Z",
-        },
-        {
           table_name: "Bar #1",
           capacity: 1,
         },

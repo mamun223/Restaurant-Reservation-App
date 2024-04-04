@@ -52,6 +52,7 @@ function Seat() {
         )
       );
       await updateReservationStatus(reservation_id)
+      console.log("reservationId in seat: ", reservation_id)
       history.push("/");
     } catch (error) {
       setError(error);
