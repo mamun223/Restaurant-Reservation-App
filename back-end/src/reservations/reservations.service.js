@@ -25,8 +25,16 @@ function createReservedTable(newTable) {
 }
 
 async function create(newReservation) {
-  const { reservation_date, reservation_time, people } = newReservation;
-  if (!isValidReservationDate(reservation_date, reservation_time, people)) {
+  const { reservation_date, reservation_time, people, mobile_number } =
+    newReservation;
+  if (
+    !isValidReservationDate(
+      reservation_date,
+      reservation_time,
+      people,
+      mobile_number
+    )
+  ) {
     return;
   }
   // return knex("reservations").insert(newReservation, "*");
@@ -37,8 +45,7 @@ async function create(newReservation) {
   return insertedReservation;
 }
 
-function isValidReservationDate(date, time, people) {
-
+function isValidReservationDate(date, time, people, mobile_number) {
   const [year, month, day] = date.split("-").map(Number);
   const [hour, minute] = time.split(":").map(Number);
 
@@ -48,6 +55,12 @@ function isValidReservationDate(date, time, people) {
   if (reservationDate.getDay() === 2) {
     throw new Error("closed");
   }
+
+  // for (let i = 0; i < mobile_number.length; i++) {
+  //   if (isNaN(parseInt(mobile_number[i]))) {
+  //     throw new Error("Mobile number should contain only numeric characters.");
+  //   }
+  // }
 
   const reservationTime =
     reservationDate.getHours() * 100 + reservationDate.getMinutes();
@@ -68,15 +81,25 @@ function isValidReservationDate(date, time, people) {
   return true;
 }
 
-function read(reservationId) {
-  return knex("reservations as r")
-    .select("r.*")
-    .where({ "r.reservation_id": reservationId })
-    .first();
+
+
+async function read(reservationId) {
+
+    // console.log("reservationId in read service: ", reservationId);
+    const result = await knex("reservations")
+      .select("*")
+      .where({ "reservation_id": reservationId })
+      .first();
+    // console.log("result in read service: ", result);
+    return result;
 }
+
+
+
 
 async function update(updatedReservationStatus) {
   const { reservation_id, status } = updatedReservationStatus;
+  console.log("reservation_id in update service: ", reservation_id)
 
   let reservationStatus;
   switch (status) {
@@ -92,11 +115,18 @@ async function update(updatedReservationStatus) {
     default:
       throw new Error("Invalid reservation status.");
   }
-  console.log("reservation_id in update function of service: ", reservation_id)
-  return knex("reservations as r")
+  
+  const updatedReservations = await knex("reservations as r")
     .where({ "r.reservation_id": reservation_id })
-    .update({ status: reservationStatus }, ["r.reservation_id"]);
+    .update({ status: reservationStatus }, ["r.*"]);
+
+  if (updatedReservations.length === 0) {
+    return { reservation_id };
+  } else {
+    return updatedReservations[0];
+  }
 }
+
 
 async function updateReservationStatusToCancelled(updatedReservationStatus) {
   const { reservation_id, status } = updatedReservationStatus;
@@ -116,6 +146,40 @@ async function updateReservationStatusToCancelled(updatedReservationStatus) {
     .where({ "r.reservation_id": reservation_id })
     .update({ status: reservationStatus }, ["r.reservation_id"]);
 }
+
+// async function updateReservation(reservation) {
+//   const {
+//     reservation_id,
+//     first_name,
+//     last_name,
+//     mobile_number,
+//     reservation_date,
+//     reservation_time,
+//     people,
+//   } = reservation;
+
+//   if (!isValidReservationDate(reservation_date, reservation_time)) {
+//     return;
+//   }
+
+//   const updateFields = {
+//     first_name: reservation.first_name,
+//     last_name: reservation.last_name,
+//     mobile_number: reservation.mobile_number,
+//     reservation_date: reservation.reservation_date,
+//     reservation_time: reservation.reservation_time,
+//     people: reservation.people,
+//   };
+
+//   return knex("reservations as r")
+//     .where({ "r.reservation_id": reservation_id })
+//     .update(updateFields)
+//     .returning("*"); // Return the updated reservation
+// }
+
+
+
+
 
 async function updateReservation(reservation) {
   const {
@@ -141,11 +205,22 @@ async function updateReservation(reservation) {
     people: reservation.people,
   };
 
-  return knex("reservations as r")
+  // Update the reservation and return the updated reservation
+  const updatedReservation = await knex("reservations as r")
     .where({ "r.reservation_id": reservation_id })
     .update(updateFields)
-    .returning("*"); // Return the updated reservation
+    .returning("*"); 
+
+  // Return the first (and only) element of the received array
+  return updatedReservation[0];
 }
+
+
+
+
+
+
+
 
 function destroy(reservationId) {
   return knex("reservations").where({ reservation_id: reservationId }).del();

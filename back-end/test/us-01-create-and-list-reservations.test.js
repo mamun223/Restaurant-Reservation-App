@@ -329,6 +329,7 @@ describe("US-01 - Create and list reservations", () => {
         .set("Accept", "application/json")
         .send({ data });
 
+        console.log("body, status: ",response.body, response.status)
       expect(response.body.error).toContain("people");
       expect(response.status).toBe(400);
     });

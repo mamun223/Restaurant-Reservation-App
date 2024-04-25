@@ -1,8 +1,15 @@
 const knex = require("../db/connection");
 
 function list() {
-  return knex("tables as t").select("t.*").orderBy("t.table_name");
+  return knex("tables").select("table_name").orderBy("table_name");
 }
+// async function list() {
+//   const tableNames = await knex("tables")
+//     .pluck("table_name")
+//     .orderBy("table_name");
+  
+//   return tableNames;
+// }
 
 async function createTable(newTable) {
   try {

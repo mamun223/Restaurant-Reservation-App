@@ -4,7 +4,8 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 async function list (req, res) {
     try {
         const tables = await service.list();
-        res.json(tables);
+        console.log("tables:---------------------",tables)
+        res.status(200).json(tables);
       } catch (error) {
         next(error);
       }
@@ -19,7 +20,7 @@ async function createTable(req, res, next) {
     if (!table_name || table_name.length < 2) {
       return res.status(400).json({ error: "table_name is required" });
     }
-    if (capacity === 0 || isNaN(capacity)) {
+    if (capacity === 0 || typeof capacity !== "number") {
       return res.status(400).json({ error: "capacity" });
     }
 
@@ -73,8 +74,8 @@ async function tableExists (req, res, next) {
 async function destroy(req, res) {
   try {
     await service.destroy(res.locals.tableId);
-    res.sendStatus(204);
-    // res.sendStatus(200); //This is a big issue!!!! made a change here!!!!!
+    // res.sendStatus(204);
+    res.sendStatus(200); //This is a big issue!!!! made a change here!!!!!
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
