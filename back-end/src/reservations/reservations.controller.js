@@ -85,9 +85,9 @@ async function create(req, res, next) {
       .json({ error: "reservation_time must be a valid time future" });
   }
 
-  if (!people || typeof people !== "number") {
-    return res.status(400).json({ error: "people must be a valid number" });
-  }
+  // if (!people || typeof people !== "number") {
+  //   return res.status(400).json({ error: "people must be a valid number" });
+  // }
 
   // if (!people || typeof people !== "number") {
   //   return res.status(400).json({ error: "people must be a valid number" });
