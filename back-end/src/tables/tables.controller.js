@@ -1,45 +1,43 @@
-const service = require("./tables.service")
+const service = require("./tables.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
-async function list (req, res) {
-    try {
-        const tables = await service.list();
-        res.json(tables);
-      } catch (error) {
-        next(error);
-      }
+async function list(req, res) {
+  try {
+    const tables = await service.list();
+    res.json(tables);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function createTable(req, res, next) {
-    const newReservedTable = ({
-        table_name,
-        capacity,
-    } = req.body.data);
+  const newReservedTable = ({ table_name, capacity } = req.body.data);
 
-    if (!table_name || table_name.length < 2) {
-      return res.status(400).json({ error: "table_name is required" });
-    }
-    if (capacity === 0 || isNaN(capacity)) {
-      return res.status(400).json({ error: "capacity" });
-    }
-
-    // if (capacity === 0 || isNaN(parseInt(capacity))) {
-    //   return res.status(400).json({ error: "capacity" });
-    // }
-    try {
-        const createdReservedTable = await service.createTable(newReservedTable);
-        res.status(201).json({ data: createdReservedTable });
-    } catch (error) {
-        next(error);
-    }
+  if (!table_name || table_name.length < 2) {
+    return res.status(400).json({ error: "table_name is required" });
   }
+  if (capacity === 0 || typeof capacity != "number") {
+    return res.status(400).json({ error: "capacity" });
+  }
+
+  // if (capacity === 0 || isNaN(parseInt(capacity))) {
+  //   return res.status(400).json({ error: "capacity" });
+  // }
+  try {
+    const createdReservedTable = await service.createTable(newReservedTable);
+    res.status(201).json({ data: createdReservedTable });
+  } catch (error) {
+    next(error);
+  }
+}
 
 async function insertReservationId(req, res, next) {
   try {
     const { tableId } = req.params;
     const { reservation_id } = req.body.data;
-    
-    if (!reservation_id || !tableId) return res.status(400).json({ error: "reservation_id" });
+
+    if (!reservation_id || !tableId)
+      return res.status(400).json({ error: "reservation_id" });
     // const reservationExists = await service.checkIfReservationExists(reservation_id);
     // if (!reservationExists) {
     //   return res.status(404).json({ error: "Reservation ID not found" });
@@ -54,15 +52,15 @@ async function insertReservationId(req, res, next) {
   }
 }
 
-async function tableExists (req, res, next) {
-  const tableId = req.params.tableId
-  const table = await service.read(tableId)
-  
+async function tableExists(req, res, next) {
+  const tableId = req.params.tableId;
+  const table = await service.read(tableId);
+
   if (table) {
-    res.locals.tableId = tableId
-    return next()
+    res.locals.tableId = tableId;
+    return next();
   }
-  return next({ status: 404, message: `${tableId}` }) // made a change here!!!!
+  return next({ status: 404, message: `${tableId}` }); // made a change here!!!!
 }
 
 // async function destroy (req, res) {
@@ -85,16 +83,18 @@ async function read(req, res) {
 
   if (!table) {
     res.status(404).json({ error: `${table.table_id}` });
-  } 
+  }
   res.json({ data: table });
 }
 
-
-  module.exports = {
-    list: asyncErrorBoundary(list),
-    createTable: asyncErrorBoundary(createTable),
-    insertReservationId: asyncErrorBoundary(insertReservationId),
-    destroy: [asyncErrorBoundary(tableExists), asyncErrorBoundary(destroy), asyncErrorBoundary(list)],
-    read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)]
-  };
-  
+module.exports = {
+  list: asyncErrorBoundary(list),
+  createTable: asyncErrorBoundary(createTable),
+  insertReservationId: asyncErrorBoundary(insertReservationId),
+  destroy: [
+    asyncErrorBoundary(tableExists),
+    asyncErrorBoundary(destroy),
+    asyncErrorBoundary(list),
+  ],
+  read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],
+};
